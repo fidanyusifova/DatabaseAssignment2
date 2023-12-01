@@ -1,11 +1,16 @@
-import java.security.spec.ECField;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+//import models.*;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DbFunctions {
-    public Connection connect_to_db(String dbname, String user, String pass) {
+    private static final String dbname = "BookStore";
+    private static final String user = "postgres";
+    private static final String pass = "fidan123";
+
+
+    public Connection connect_to_db() {
         Connection conn = null;
         try {
             Class.forName("org.postgresql.Driver");

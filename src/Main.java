@@ -62,15 +62,6 @@ import java.util.Scanner;
                         bookCrud.getAllBooks(conn).forEach(book -> {
                             System.out.println("Book ID: " + book.getBookId() + ", Title: " + book.getTitle());
                         });
-                        AuthorCrud authorCrud = new AuthorCrud();
-
-                        // Perform CRUD operations for Authors
-                        authorCrud.insertAuthor(conn);
-                        authorCrud.getAuthors(conn);
-                        authorCrud.updateAuthor(conn);
-                        authorCrud.deleteAuthor(conn);
-
-                        conn.close(); // Close the connection when finished
 
                     } catch (SQLException e) {
                         System.err.println("SQLException: " + e.getMessage());
@@ -87,40 +78,7 @@ import java.util.Scanner;
                             }
                         }
                     }
-                    try {
-                        conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BookStore", "postgres", "fidan123");
 
-                        AuthorCrud authorCrud = new AuthorCrud();
-
-                        // Creating an Author object and setting its properties
-                        Author newAuthor = new Author();
-                        newAuthor.setAuthorName("John Doe");
-
-                        // Inserting the new author using the AuthorCrud method
-                        authorCrud.insertAuthor(conn);
-
-                        // Retrieving authors
-                        authorCrud.getAuthors(conn);
-
-                        // Updating an author
-                        newAuthor.setAuthorId(1); // Assuming the ID of the author you want to update is 1
-                        newAuthor.setAuthorName("Jane Smith");
-                        authorCrud.updateAuthor(conn);
-
-                        // Deleting an author
-                        authorCrud.deleteAuthor(conn); // Assuming the ID of the author you want to delete is 2
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    } finally {
-                        // Close the connection
-                        if (conn != null) {
-                            try {
-                                conn.close();
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
 
                     // Close the scanner
                     scanner.close();
