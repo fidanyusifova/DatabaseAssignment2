@@ -1,6 +1,8 @@
-//package methods;
+package Methods;//package methods;
 
 //import models.Author;
+
+import objects.Author;
 
 import java.sql.*;
 import java.util.ArrayList;
