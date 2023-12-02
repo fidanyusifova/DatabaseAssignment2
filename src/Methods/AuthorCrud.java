@@ -1,7 +1,5 @@
 package Methods;//package methods;
 
-//import models.Author;
-
 import objects.Author;
 
 import java.sql.*;

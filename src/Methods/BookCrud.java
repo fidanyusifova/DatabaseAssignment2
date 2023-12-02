@@ -36,6 +36,13 @@ public class BookCrud {
     //INSERT METHOD
     public void insertBook(Book book) {
         try (Connection conn = connect_to_db()) {
+            // Check if the book or its author is null
+            if (book == null || book.getAuthor() == null) {
+                System.out.println("Book or Author object is null. Book insertion failed.");
+                return;
+            }
+
+
             // Check if the author with the specified authorId exists
             if (!isAuthorExists(conn, book.getAuthor().getAuthorId())) {
                 System.out.println("Author with ID " + book.getAuthor().getAuthorId() + " does not exist. Book insertion failed.");

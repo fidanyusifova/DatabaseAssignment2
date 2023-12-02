@@ -31,7 +31,7 @@ public class CustomerCrud {
     public void insertCustomer(Customer customer) {
         try (Connection conn = connect_to_db();
              PreparedStatement pstmt = conn.prepareStatement(
-                     "INSERT INTO customers (first_name, last_name, email, phone) VALUES (?, ?, ?, ?)")) {
+                     "INSERT INTO customers (first_name, last_name, email, phone_number) VALUES (?, ?, ?, ?)")) {
             pstmt.setString(1, customer.getFirstName());
             pstmt.setString(2, customer.getLastName());
             pstmt.setString(3, customer.getEmail());
@@ -61,7 +61,8 @@ public class CustomerCrud {
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
                 String email = rs.getString("email");
-                String phone = rs.getString("phone");
+                String phone = rs.getString("phone_number");
+
 
                 // Create a Customer object
                 Customer customer = new Customer(customerId, firstName, lastName, email, phone);
@@ -87,7 +88,7 @@ public class CustomerCrud {
                     String firstName = rs.getString("first_name");
                     String lastName = rs.getString("last_name");
                     String email = rs.getString("email");
-                    String phone = rs.getString("phone");
+                    String phone = rs.getString("phone_number");
 
                     return new Customer(customerId, firstName, lastName, email, phone);
                 }
@@ -123,9 +124,12 @@ public class CustomerCrud {
             if (!newEmail.equals(existingCustomer.getEmail())) {
                 queryBuilder.append(" email = ?,");
             }
+            // Inside the updateCustomer method
             if (!newPhone.equals(existingCustomer.getPhone())) {
-                queryBuilder.append(" phone = ?,");
+                queryBuilder.append(" phone_number = ?,");
+               // pstmt.setString(parameterIndex++, newPhone);
             }
+
 
             // Remove the trailing comma
             if (queryBuilder.charAt(queryBuilder.length() - 1) == ',') {
@@ -176,7 +180,7 @@ public class CustomerCrud {
                     String firstName = rs.getString("first_name");
                     String lastName = rs.getString("last_name");
                     String email = rs.getString("email");
-                    String phone = rs.getString("phone");
+                    String phone = rs.getString("phone_number");
 
                     return new Customer(id, firstName, lastName, email, phone);
                 }
