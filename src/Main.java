@@ -1,6 +1,6 @@
 import Methods.*;
 import objects.*;
-
+import Methods.Metadata;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-   // static MetaData metaData = new MetaData();
+    static Metadata metaData = new Metadata();
     //static TransactionProcess transactionProcess = new TransactionProcess();
     static BookCrud bookOperations = new BookCrud();
     static AuthorCrud authorOperations = new AuthorCrud();
@@ -521,21 +521,18 @@ public class Main {
     }
 
 
-    private static void displayTablesInfoWithKeys(){
-       // metaData.displayTablesInfoWithKeys();
+    private static void displayTablesInfoWithKeys() {
+        metaData.displayTablesInfoWithKeys();
     }
 
-    private  static  void displayColumnsInfo(){
+    private static void displayColumnsInfo() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Book Title: ");
-        String bookTitle = scanner.nextLine();
+        System.out.print("Enter Table Name: ");
+        String tableName = scanner.nextLine();
 
-        if (bookTitle.equals("books") || bookTitle.equals("authors") || bookTitle.equals("customer") || bookTitle.equals("order_details") || bookTitle.equals("orders")) {
-          //  metaData.displayColumnsInfo(metaData.connect_to_db(), bookTitle);
-        }else {
-            System.out.println("We don't have any information for the provided book title.");
-            displayColumnsInfo();
-        }
+        metaData.displayColumnsInfo(tableName); // Calling the method to display columns information
     }
+
+
 }

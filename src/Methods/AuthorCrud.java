@@ -31,9 +31,9 @@ public class AuthorCrud {
     public void insertAuthor(Author author) {
         try (Connection conn = connect_to_db();
              PreparedStatement pstmt = conn.prepareStatement(
-                     "INSERT INTO authors (author_name, country) VALUES (?, ?, ?)")) {
+                     "INSERT INTO authors (author_name, country) VALUES (?, ?)")) {
             pstmt.setString(1, author.getAuthorName());
-            pstmt.setString(3, author.getCountry());
+            pstmt.setString(2, author.getCountry());
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
@@ -116,8 +116,8 @@ public class AuthorCrud {
 
             try (PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
                 pstmt.setString(1, existingAuthor.getAuthorName());
-                pstmt.setString(3, existingAuthor.getCountry());
-                pstmt.setInt(4, authorId);
+                pstmt.setString(2, existingAuthor.getCountry());
+                pstmt.setInt(3, authorId);
 
                 int affectedRows = pstmt.executeUpdate();
                 if (affectedRows > 0) {
