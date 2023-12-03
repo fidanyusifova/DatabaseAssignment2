@@ -145,7 +145,7 @@ public class OrderCrud {
 
         try (Connection conn = connect_to_db();
              PreparedStatement pstmt = conn.prepareStatement(
-                     "SELECT * FROM order_details WHERE order_id = ?")) {
+                     "SELECT * FROM orderdetail WHERE order_id = ?")) {
 
             pstmt.setInt(1, orderId);
             try (ResultSet rs = pstmt.executeQuery()) {

@@ -153,7 +153,10 @@ public class Main {
         int authorId = scanner.nextInt();
         scanner.nextLine();
 
-        Book newBook = new Book(title, genre, price, stockQuantity, authorId);
+        Author author = bookOperations.getAuthorById(authorId);
+
+
+        Book newBook = new Book(title, genre, price, stockQuantity, author);
         bookOperations.insertBook(newBook);
 
         System.out.println("Book created successfully!");

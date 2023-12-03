@@ -33,6 +33,27 @@ public class BookCrud {
     }
 
 
+    public Author getAuthorById(int authorId) {
+        Author author = null;
+        try (Connection conn = connect_to_db();
+             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM authors WHERE author_id = ?")) {
+            pstmt.setInt(1, authorId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String authorName = rs.getString("author_name");
+                    String country = rs.getString("country");
+                    // Create an Author object with the retrieved details
+                    author = new Author(authorId, authorName, country);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return author;
+    }
+
+
     //INSERT METHOD
     public void insertBook(Book book) {
         try (Connection conn = connect_to_db()) {
@@ -81,7 +102,7 @@ public class BookCrud {
     }
 
     // Retrieve (different versions)
-    public List<Book> retrieveAllBooks() {
+    /*public List<Book> retrieveAllBooks() {
         List<Book> books = new ArrayList<>();
 
         try (Connection conn = connect_to_db();
@@ -105,7 +126,45 @@ public class BookCrud {
             e.printStackTrace();
         }
         return books;
+    }*/
+    public List<Book> retrieveAllBooks() {
+        List<Book> books = new ArrayList<>();
+
+        try (Connection conn = connect_to_db();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT b.*, a.author_name, a.country FROM books b JOIN authors a ON b.author_id = a.author_id")) {
+
+            while (rs.next()) {
+                int bookId = rs.getInt("book_id");
+                String title = rs.getString("title");
+                String genre = rs.getString("genre");
+                double price = rs.getDouble("price");
+                int stockQuantity = rs.getInt("stock_quantity");
+
+                // Fetch author details
+                int authorId = rs.getInt("author_id");
+                String authorName = rs.getString("author_name");
+                String country = rs.getString("country");
+                Author author = new Author(authorId, authorName, country);
+
+                // Create a Book object
+                Book book = new Book(title, genre, price, stockQuantity, author);
+
+                //Book book = new Book(bookId, title, genre, price, stockQuantity, author);
+
+                // Fetch and set orders for this book
+                List<Order> orders = retrieveAllOrdersByBookId(bookId);
+                book.setOrders(orders);
+
+                // Add the book to the list
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
     }
+
 
     // Retrieve all orders for a given bookId
     public String retrieveBookInfoAndOrdersByBookId(int bookId) {
@@ -138,7 +197,7 @@ public class BookCrud {
 
                         Author author = new Author(authorId, authorName, country);
 
-                        book = new Book(retrievedBookId, title, genre, price, stockQuantity, author);
+                        book = new Book( title, genre, price, stockQuantity, author);
                     }
                 }
             }
@@ -172,9 +231,10 @@ public class BookCrud {
         try (Connection conn = connect_to_db();
              PreparedStatement pstmt = conn.prepareStatement(
                      "SELECT o.order_id, o.order_date, o.total_amount " +
-                             "FROM order_details od " +
+                             "FROM orderdetail od " +
                              "JOIN orders o ON od.order_id = o.order_id " +
-                             "WHERE od.book_id = ?")) {
+                             "WHERE od.book_id = ?"
+             )) {
 
             pstmt.setInt(1, bookId);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -281,7 +341,7 @@ public class BookCrud {
         Author author = new Author(authorId, authorName, country);
 
         // Create and return the Book object
-        return new Book(bookId, title, genre, price, stockQuantity, author);
+        return new Book( title, genre, price, stockQuantity, author);
     }
 
     public Author findAuthorById(int authorId) throws SQLException {
@@ -309,7 +369,7 @@ public class BookCrud {
             conn.setAutoCommit(false);
 
             // Step 1: Delete entries from order_details
-            deleteOrderDetails(conn, bookId);
+             deleteOrderDetails(conn, bookId);
 
             // Step 2: Delete the book itself
             deleteBookFromBooks(conn, bookId);
@@ -325,7 +385,7 @@ public class BookCrud {
 
     private void deleteOrderDetails(Connection conn, int bookId) throws SQLException {
         try (PreparedStatement pstmt = conn.prepareStatement(
-                "DELETE FROM order_details WHERE book_id = ?")) {
+                "DELETE FROM orderdetail WHERE book_id = ?")) {
             pstmt.setInt(1, bookId);
             pstmt.executeUpdate();
         }

@@ -5,40 +5,22 @@ import java.util.List;
 
 public class Book {
 
-    public Book(int bookId, String title, String genre, double price, int stockQuantity) {
-        this.bookId = bookId;
-        this.title = title;
-        this.genre = genre;
-        this.price = price;
-        this.stockQuantity = stockQuantity;
-    }
+    private int bookId;
+    private String title;
+    private String genre;
+    private double price;
+    private int stockQuantity;
 
-    public Book(int bookId, String title, String genre, double price, int stockQuantity, Author author, Order order) {
-        this.bookId = bookId;
-        this.title = title;
-        this.genre = genre;
-        this.price = price;
-        this.stockQuantity = stockQuantity;
-        this.author = author;
-        this.order = order;
-    }
+    private Author author;
+    private List<Order> orders = new ArrayList<>();
 
-    public Book(int bookId, String title, String genre, double price, int stockQuantity, Author author) {
-        this.bookId = bookId;
+    public Book( String title, String genre, double price, int stockQuantity, Author author) {
+        //this.bookId = bookId;
         this.title = title;
         this.genre = genre;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.author = author;
-    }
-
-
-    public Book(String title, String genre, double price, int stockQuantity, int authorId) {
-        this.title = title;
-        this.genre = genre;
-        this.price = price;
-        this.stockQuantity = stockQuantity;
-       // this.author = new Author(authorId, null, null, null); // Create a dummy Author with the given authorId
     }
 
 
@@ -50,29 +32,10 @@ public class Book {
                 ", Price: " + price +
                 ", StockQuantity: " + stockQuantity +
                 ", Author: " + author +
-                ", Order: " + order;
+                ", Orders: " + orders;
     }
-
-    private int bookId;
-    private String title;
-    private String genre;
-    private double price;
-    private int stockQuantity;
-
-    private Author author;
-    private Order order;
-
-    private List<Order> orders = new ArrayList<>();
 
     // Getters and Setters...
-
-    public void addOrder(Order order) {
-        orders.add(order);
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
 
     public int getBookId() {
         return bookId;
@@ -122,11 +85,15 @@ public class Book {
         this.author = author;
     }
 
-    public Order getOrder() {
-        return order;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void addOrder(Order order) {
+        orders.add(order);
     }
 }
