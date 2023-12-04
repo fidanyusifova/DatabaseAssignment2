@@ -150,8 +150,6 @@ public class BookCrud {
                 // Create a Book object
                 Book book = new Book(title, genre, price, stockQuantity, author);
 
-                //Book book = new Book(bookId, title, genre, price, stockQuantity, author);
-
                 // Fetch and set orders for this book
                 List<Order> orders = retrieveAllOrdersByBookId(bookId);
                 book.setOrders(orders);

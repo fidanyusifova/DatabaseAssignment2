@@ -1,6 +1,9 @@
 package Methods;
 
+import objects.OrderRequest;
+
 import java.sql.*;
+import java.util.List;
 
 public class Transaction{
     private static final String dbname = "BookStore";
@@ -23,7 +26,6 @@ public class Transaction{
         }
         return conn;
     }
-
     public void placeOrder(int customerId, int bookId, int quantity) {
         Connection conn = null;
         PreparedStatement orderStmt = null;
@@ -93,6 +95,8 @@ public class Transaction{
         }
     }
 
+
+
     private int getAvailableQuantity(Connection conn, int bookId) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT stock_quantity FROM books WHERE book_id = ?");
         stmt.setInt(1, bookId);
@@ -114,3 +118,5 @@ public class Transaction{
         return 0.0;
     }
 }
+
+

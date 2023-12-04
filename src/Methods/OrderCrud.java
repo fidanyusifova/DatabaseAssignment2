@@ -32,7 +32,7 @@ public class OrderCrud {
         try (Connection conn = connect_to_db()) {
             conn.setAutoCommit(false);
 
-            // Delete entries from order_details
+            // Delete entries from orderdetail
             deleteOrderDetails(conn, orderId);
 
             // Update stock quantity in books table
@@ -52,7 +52,7 @@ public class OrderCrud {
 
     private void deleteOrderDetails(Connection conn, int orderId) throws SQLException {
         try (PreparedStatement pstmt = conn.prepareStatement(
-                "DELETE FROM order_details WHERE order_id = ?")) {
+                "DELETE FROM orderdetail WHERE order_id = ?")) {
             pstmt.setInt(1, orderId);
             pstmt.executeUpdate();
         }
@@ -61,7 +61,7 @@ public class OrderCrud {
     private void updateStockQuantityForDeletedOrder(Connection conn, int orderId) throws SQLException {
         String query = "UPDATE books " +
                 "SET stock_quantity = stock_quantity + od.quantity " +
-                "FROM order_details od " +
+                "FROM orderdetail od " +
                 "WHERE books.book_id = od.book_id AND od.order_id = ?";
         System.out.println("SQL Query: " + query);
 
@@ -85,14 +85,14 @@ public class OrderCrud {
             conn.setAutoCommit(false);
 
             // Retrieve existing order details
-            List<OrderDetail> existingOrderDetails = getOrderDetailsByOrderId(conn, orderId);
+            List<OrderDetail> existingOrderDetail = getOrderDetailsByOrderId(conn, orderId);
 
-            if (existingOrderDetails != null && !existingOrderDetails.isEmpty()) {
+            if (existingOrderDetail != null && !existingOrderDetail.isEmpty()) {
                 // Update order details based on the provided lists
-                for (int i = 0; i < existingOrderDetails.size(); i++) {
-                    int orderDetailId = existingOrderDetails.get(i).getOrderDetailId();
-                    int updatedBookId = (i < newBookIds.size()) ? newBookIds.get(i) : existingOrderDetails.get(i).getBookId();
-                    int updatedQuantity = (i < newQuantities.size()) ? newQuantities.get(i) : existingOrderDetails.get(i).getQuantity();
+                for (int i = 0; i < existingOrderDetail.size(); i++) {
+                    int orderDetailId = existingOrderDetail.get(i).getOrderDetailId();
+                    int updatedBookId = (i < newBookIds.size()) ? newBookIds.get(i) : existingOrderDetail.get(i).getBookId();
+                    int updatedQuantity = (i < newQuantities.size()) ? newQuantities.get(i) : existingOrderDetail.get(i).getQuantity();
 
                     // Update each order detail
                     updateOrderDetailInDatabase(conn, orderDetailId, updatedBookId, updatedQuantity);
@@ -113,7 +113,7 @@ public class OrderCrud {
     private List<OrderDetail> getOrderDetailsByOrderId(Connection conn, int orderId) throws SQLException {
         List<OrderDetail> orderDetails = new ArrayList<>();
         try (PreparedStatement pstmt = conn.prepareStatement(
-                "SELECT * FROM order_details WHERE order_id = ?")) {
+                "SELECT * FROM orderdetail WHERE order_id = ?")) {
             pstmt.setInt(1, orderId);
             ResultSet rs = pstmt.executeQuery();
 
@@ -132,7 +132,7 @@ public class OrderCrud {
 
     private void updateOrderDetailInDatabase(Connection conn, int orderDetailId, int newBookId, int newQuantity) throws SQLException {
         try (PreparedStatement pstmt = conn.prepareStatement(
-                "UPDATE order_details SET book_id = ?, quantity = ? WHERE order_detail_id = ?")) {
+                "UPDATE orderdetail SET book_id = ?, quantity = ? WHERE order_detail_id = ?")) {
             pstmt.setInt(1, newBookId);
             pstmt.setInt(2, newQuantity);
             pstmt.setInt(3, orderDetailId);

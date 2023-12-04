@@ -6,13 +6,12 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     static Metadata metaData = new Metadata();
-    //static TransactionProcess transactionProcess = new TransactionProcess();
+    static Transaction transactionProcess = new Transaction();
     static BookCrud bookOperations = new BookCrud();
     static AuthorCrud authorOperations = new AuthorCrud();
     static CustomerCrud customerOperations = new CustomerCrud();
@@ -75,7 +74,7 @@ public class Main {
                     updateOrderDetails(); //not working
                     break;
                 case 16:
-                    placeOrderFromUser();
+                    placeOrderFromUser(scanner);
                     break;
                 case 17:
                     displayTablesInfoWithKeys();
@@ -201,24 +200,24 @@ public class Main {
 
             System.out.println("Enter the updated book information:");
 
-            System.out.print("Title (press Enter to keep the existing title): ");
+            System.out.print("Title: ");
             String newTitle = getUserInput(scanner);
 
-            System.out.print("Genre (press Enter to keep the existing genre): ");
+            System.out.print("Genre: ");
             String newGenre = getUserInput(scanner);
 
-            System.out.print("Price (press Enter to keep the existing price): ");
+            System.out.print("Price: ");
             double newPrice = parseDoubleFromUserInput(scanner);
 
-            System.out.print("Stock Quantity (press Enter to keep the existing stock quantity): ");
+            System.out.print("Stock Quantity: ");
             int newStockQuantity = parseIntFromUserInput(scanner);
 
-            System.out.print("Author ID (press Enter to keep the existing author): ");
+            System.out.print("Author ID: ");
             int newAuthorId = parseIntFromUserInput(scanner);
 
             bookOperations.updateBook(bookId, newTitle, newGenre, newPrice, newStockQuantity, newAuthorId);
 
-            System.out.println("Book updated successfully.");
+            //System.out.println("Book updated successfully.");
         }
     }
 
@@ -491,33 +490,17 @@ public class Main {
     }
 
 
-    private static void placeOrderFromUser() {
-        Scanner scanner = new Scanner(System.in);
-
+    private static void placeOrderFromUser(Scanner scanner) {
         System.out.print("Enter Customer ID: ");
         int customerId = scanner.nextInt();
 
-        System.out.print("Enter the number of different orders: ");
-        int numBooks = scanner.nextInt();
+        System.out.print("Enter Book ID: ");
+        int bookId = scanner.nextInt();
 
-        List<Integer> bookIds = new ArrayList<>();
-        List<Integer> quantities = new ArrayList<>();
+        System.out.print("Enter Quantity: ");
+        int quantity = scanner.nextInt();
 
-        // Get book IDs and quantities from the user
-        for (int i = 0; i < numBooks; i++) {
-            System.out.print("Enter Book ID for item " + (i + 1) + ": ");
-            int bookId = scanner.nextInt();
-
-            System.out.print("Enter quantity for item " + (i + 1) + ": ");
-            int quantity = scanner.nextInt();
-
-            bookIds.add(bookId);
-            quantities.add(quantity);
-        }
-
-        OrderRequest orderRequest = new OrderRequest(customerId, bookIds, quantities);
-
-       // transactionProcess.placeOrder(orderRequest);
+        transactionProcess.placeOrder(customerId, bookId, quantity);
     }
 
 

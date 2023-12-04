@@ -27,7 +27,6 @@ public class CustomerCrud {
         }
         return conn;
     }
-
     public void insertCustomer(Customer customer) {
         try (Connection conn = connect_to_db();
              PreparedStatement pstmt = conn.prepareStatement(
@@ -47,7 +46,6 @@ public class CustomerCrud {
             e.printStackTrace();
         }
     }
-
 
     public List<Customer> retrieveAllCustomers() {
         List<Customer> customers = new ArrayList<>();

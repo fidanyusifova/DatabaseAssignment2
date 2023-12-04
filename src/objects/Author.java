@@ -1,16 +1,12 @@
 package objects;
 
-import java.awt.print.Book;
 import java.util.List;
 
 public class Author {
     private int authorId;
-
     private String authorName;
-
     private String country;
-
-    private List<Book> books;
+    private List<objects.Book> books;
 
     public Author(String authorName, String country) {
         this.authorName = authorName;
@@ -55,11 +51,11 @@ public class Author {
         this.country = country;
     }
 
-    public List<Book> getBooks() {
+    public List<objects.Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Book> books) {
+    public void setBooks(List<objects.Book> books) {
         this.books = books;
     }
 }
