@@ -102,31 +102,6 @@ public class BookCrud {
     }
 
     // Retrieve (different versions)
-    /*public List<Book> retrieveAllBooks() {
-        List<Book> books = new ArrayList<>();
-
-        try (Connection conn = connect_to_db();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM books")) {
-
-            while (rs.next()) {
-                int bookId = rs.getInt("book_id");
-                String title = rs.getString("title");
-                String genre = rs.getString("genre");
-                double price = rs.getDouble("price");
-                int stockQuantity = rs.getInt("stock_quantity");
-
-                // Create a Book object
-                Book book = new Book(bookId, title, genre, price, stockQuantity);
-
-                // Add the book to the list
-                books.add(book);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return books;
-    }*/
     public List<Book> retrieveAllBooks() {
         List<Book> books = new ArrayList<>();
 

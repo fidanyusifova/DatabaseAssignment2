@@ -164,7 +164,17 @@ public class AuthorCrud {
             System.out.println("Author and associated books deleted successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Failed to delete author and associated books. Rolling back transaction.");
+           /* if (conn != null) {
+                try {
+                    // Rollback the transaction if an exception occurs
+                    conn.rollback();
+                    System.out.println("Rolling back transaction.");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    System.out.println("Failed to rollback transaction.");
+                }
+            }*/
+            System.out.println("Failed to delete author and associated books.");
         }
     }
 
@@ -183,6 +193,7 @@ public class AuthorCrud {
             pstmt.executeUpdate();
         }
     }
+
 
 }
 

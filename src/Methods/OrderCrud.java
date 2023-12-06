@@ -95,7 +95,7 @@ public class OrderCrud {
                     int updatedQuantity = (i < newQuantities.size()) ? newQuantities.get(i) : existingOrderDetail.get(i).getQuantity();
 
                     // Update each order detail
-                    updateOrderDetailInDatabase(conn, orderDetailId, updatedBookId, updatedQuantity);
+                   // updateOrderDetailInDatabase(conn, orderDetailId, updatedBookId, updatedQuantity);
                 }
 
                 // Commit the transaction
@@ -130,13 +130,4 @@ public class OrderCrud {
         return orderDetails;
     }
 
-    private void updateOrderDetailInDatabase(Connection conn, int orderDetailId, int newBookId, int newQuantity) throws SQLException {
-        try (PreparedStatement pstmt = conn.prepareStatement(
-                "UPDATE orderdetail SET book_id = ?, quantity = ? WHERE order_detail_id = ?")) {
-            pstmt.setInt(1, newBookId);
-            pstmt.setInt(2, newQuantity);
-            pstmt.setInt(3, orderDetailId);
-            pstmt.executeUpdate();
-        }
-    }
 }
