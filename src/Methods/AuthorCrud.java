@@ -1,4 +1,4 @@
-package Methods;//package methods;
+package Methods;
 
 import objects.Author;
 
