@@ -14,8 +14,16 @@ public class Book {
     private Author author;
     private List<Order> orders = new ArrayList<>();
 
-    public Book( String title, String genre, double price, int stockQuantity, Author author) {
-        //this.bookId = bookId;
+    public Book(int bookId,String title, String genre, double price, int stockQuantity, Author author) {
+        this.bookId = bookId;
+        this.title = title;
+        this.genre = genre;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
+        this.author = author;
+    }
+
+    public Book(String title, String genre, double price, int stockQuantity, Author author) {
         this.title = title;
         this.genre = genre;
         this.price = price;

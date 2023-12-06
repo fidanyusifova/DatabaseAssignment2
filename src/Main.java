@@ -71,15 +71,12 @@ public class Main {
                     deleteOrder();
                     break;
                 case 15:
-                    updateOrderDetails(); //not working
-                    break;
-                case 16:
                     placeOrderFromUser(scanner);
                     break;
-                case 17:
+                case 16:
                     displayTablesInfoWithKeys();
                     break;
-                case 18:
+                case 17:
                     displayColumnsInfo();
                     break;
                 case 0:
@@ -93,37 +90,23 @@ public class Main {
     }
 
     private static void displayMenu() {
-        System.out.println("<-------- Console App Menu -------->");
-        System.out.println("Book Section:");
         System.out.println("1. Create Book");
         System.out.println("2. Show All Books");
         System.out.println("3. Show Book Info and Orders");
         System.out.println("4. Update Book");
         System.out.println("5. Delete Book");
-        System.out.println("<-------------------------------->");
-        System.out.println("Author Section:");
         System.out.println("6. Create Author");
         System.out.println("7. Show All Author");
         System.out.println("8. Update Author");
         System.out.println("9. Delete Author");
-        System.out.println("<-------------------------------->");
-        System.out.println("Customer Section:");
         System.out.println("10. Create Customer");
         System.out.println("11. Show All Customer");
         System.out.println("12. Update Customer");
         System.out.println("13. Delete Customer");
-        System.out.println("<-------------------------------->");
-        System.out.println("Order Section:");
         System.out.println("14. Delete Order");
-        System.out.println("15. Update Order Details");
-        System.out.println("<-------------------------------->");
-        System.out.println("Transaction Section:");
-        System.out.println("16. Transaction order");
-        System.out.println("<-------------------------------->");
-        System.out.println("Metadata Section:");
-        System.out.println("17. Display Tables Informations:");
-        System.out.println("18. Display Columns Informations:");
-        System.out.println("<-------------------------------->");
+        System.out.println("15. Transaction order");
+        System.out.println("16. Display Tables Informations:");
+        System.out.println("17. Display Columns Informations:");
         System.out.println("Exit:");
         System.out.println("0. Exit");
         System.out.print("Enter your choice: ");
@@ -436,59 +419,6 @@ public class Main {
             orderOperations.deleteOrder(orderId);
         }
     }
-
-    private static void updateOrderDetails() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter the order ID to update:");
-        int orderId = scanner.nextInt();
-        scanner.nextLine();  // Consume the newline character
-
-        // Check if the order ID is valid
-        if (orderId != 0) {
-            // Retrieve the existing order details
-            List<OrderDetail> existingOrderDetails = orderOperations.getOrderDetailsByOrderId(orderId);
-
-            if (existingOrderDetails != null && !existingOrderDetails.isEmpty()) {
-                // Display existing order details
-                System.out.println("Existing Order Details:");
-                for (OrderDetail orderDetail : existingOrderDetails) {
-                    System.out.println(orderDetail);
-                }
-
-                // Prompt the user for updated information
-                System.out.println("Enter the updated order details:");
-
-                List<Integer> newBookIds = new ArrayList<>();
-                List<Integer> newQuantities = new ArrayList<>();
-
-                // Get updated book IDs and quantities
-                boolean continueUpdating = true;
-                while (continueUpdating) {
-                    System.out.print("Enter Book ID (0 to stop): ");
-                    int bookId = scanner.nextInt();
-                    if (bookId == 0) {
-                        continueUpdating = false;
-                        break;
-                    }
-
-                    System.out.print("Enter Quantity: ");
-                    int quantity = scanner.nextInt();
-
-                    newBookIds.add(bookId);
-                    newQuantities.add(quantity);
-                }
-
-                // Update the order details with the new information
-                orderOperations.updateOrderDetails(orderId, newBookIds, newQuantities);
-
-                System.out.println("Order details updated successfully.");
-            } else {
-                System.out.println("No order details found for the specified order.");
-            }
-        }
-    }
-
 
     private static void placeOrderFromUser(Scanner scanner) {
         System.out.print("Enter Customer ID: ");

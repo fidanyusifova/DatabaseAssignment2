@@ -139,31 +139,4 @@ public class OrderCrud {
             pstmt.executeUpdate();
         }
     }
-
-    public List<OrderDetail> getOrderDetailsByOrderId(int orderId) {
-        List<OrderDetail> orderDetails = new ArrayList<>();
-
-        try (Connection conn = connect_to_db();
-             PreparedStatement pstmt = conn.prepareStatement(
-                     "SELECT * FROM orderdetail WHERE order_id = ?")) {
-
-            pstmt.setInt(1, orderId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    OrderDetail orderDetail = new OrderDetail(
-                            rs.getInt("order_detail_id"),
-                            rs.getInt("order_id"),
-                            rs.getInt("book_id"),
-                            rs.getInt("quantity")
-                    );
-                    orderDetails.add(orderDetail);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return orderDetails;
-    }
-
 }

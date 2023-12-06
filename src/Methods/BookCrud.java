@@ -148,7 +148,7 @@ public class BookCrud {
                 Author author = new Author(authorId, authorName, country);
 
                 // Create a Book object
-                Book book = new Book(title, genre, price, stockQuantity, author);
+                Book book = new Book(bookId ,title, genre, price, stockQuantity, author);
 
                 // Fetch and set orders for this book
                 List<Order> orders = retrieveAllOrdersByBookId(bookId);
@@ -195,7 +195,7 @@ public class BookCrud {
 
                         Author author = new Author(authorId, authorName, country);
 
-                        book = new Book( title, genre, price, stockQuantity, author);
+                        book = new Book(bookId, title, genre, price, stockQuantity, author);
                     }
                 }
             }
@@ -339,7 +339,7 @@ public class BookCrud {
         Author author = new Author(authorId, authorName, country);
 
         // Create and return the Book object
-        return new Book( title, genre, price, stockQuantity, author);
+        return new Book(bookId, title, genre, price, stockQuantity, author);
     }
 
     public Author findAuthorById(int authorId) throws SQLException {
