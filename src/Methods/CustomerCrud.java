@@ -134,7 +134,7 @@ public class CustomerCrud {
                 queryBuilder.deleteCharAt(queryBuilder.length() - 1);
             }
 
-            queryBuilder.append(" WHERE customer_id = ?");
+            queryBuilder.append("WHERE customer_id = ?");
 
             try (PreparedStatement pstmt = conn.prepareStatement(queryBuilder.toString())) {
                 int parameterIndex = 1;
