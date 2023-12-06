@@ -1,8 +1,4 @@
-//import models.*;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DbFunctions {
     private static final String dbname = "BookStore";
