@@ -93,37 +93,37 @@ public class Main {
     }
 
     private static void displayMenu() {
-        System.out.println("-------- Console App Menu --------");
+        System.out.println("<-------- Console App Menu -------->");
         System.out.println("Book Section:");
         System.out.println("1. Create Book");
         System.out.println("2. Show All Books");
         System.out.println("3. Show Book Info and Orders");
         System.out.println("4. Update Book");
         System.out.println("5. Delete Book");
-        System.out.println("--------------------------------");
+        System.out.println("<-------------------------------->");
         System.out.println("Author Section:");
         System.out.println("6. Create Author");
         System.out.println("7. Show All Author");
         System.out.println("8. Update Author");
         System.out.println("9. Delete Author");
-        System.out.println("--------------------------------");
+        System.out.println("<-------------------------------->");
         System.out.println("Customer Section:");
         System.out.println("10. Create Customer");
         System.out.println("11. Show All Customer");
         System.out.println("12. Update Customer");
         System.out.println("13. Delete Customer");
-        System.out.println("--------------------------------");
+        System.out.println("<-------------------------------->");
         System.out.println("Order Section:");
         System.out.println("14. Delete Order");
         System.out.println("15. Update Order Details");
-        System.out.println("--------------------------------");
+        System.out.println("<-------------------------------->");
         System.out.println("Transaction Section:");
         System.out.println("16. Transaction order");
-        System.out.println("--------------------------------");
+        System.out.println("<-------------------------------->");
         System.out.println("Metadata Section:");
         System.out.println("17. Display Tables Informations:");
         System.out.println("18. Display Columns Informations:");
-        System.out.println("--------------------------------");
+        System.out.println("<-------------------------------->");
         System.out.println("Exit:");
         System.out.println("0. Exit");
         System.out.print("Enter your choice: ");
@@ -306,11 +306,11 @@ public class Main {
 
             System.out.println("Enter the updated author information:");
 
-            System.out.print("Author Name (press Enter to keep the existing name): ");
+            System.out.print("Author Name: ");
             String newAuthorName = getUserInput(scanner);
 
 
-            System.out.print("Country (press Enter to keep the existing country): ");
+            System.out.print("Country: ");
             String newCountry = getUserInput(scanner);
 
             authorOperations.updateAuthor(authorId, newAuthorName, newCountry);
@@ -393,16 +393,16 @@ public class Main {
 
             System.out.println("Enter the updated customer information:");
 
-            System.out.print("First Name (press Enter to keep the existing first name): ");
+            System.out.print("First Name: ");
             String newFirstName = getUserInput(scanner);
 
-            System.out.print("Last Name (press Enter to keep the existing last name): ");
+            System.out.print("Last Name: ");
             String newLastName = getUserInput(scanner);
 
-            System.out.print("Email (press Enter to keep the existing email): ");
+            System.out.print("Email: ");
             String newEmail = getUserInput(scanner);
 
-            System.out.print("Phone (press Enter to keep the existing phone): ");
+            System.out.print("Phone: ");
             String newPhone = getUserInput(scanner);
 
             customerOperations.updateCustomer(customerId, newFirstName, newLastName, newEmail, newPhone);
